@@ -18,7 +18,7 @@ const Home = () => {
     const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
     const handleAddTask = () => {
-              // console.log(task);
+              // console.log("adding task:" {task, description});
         axios.post(`${apiUrl}/new-task`, {task, description})
             .then(res => {
                 // console.log(res.data)
@@ -27,7 +27,7 @@ const Home = () => {
                 setTodos(res.data);
             })
             .catch(err => {
-                console.log("error while adding task",err);
+                console.log("error while adding task",err.response ? err.response.data : err.message);
             });
     }
 
