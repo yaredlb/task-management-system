@@ -29,20 +29,27 @@ db.connect((err) => {
 })
 
 app.post('/new-task', (req, res) => {
-    console.log(req.body);
-    const q = 'insert into todos (task, description, createdAt, status) values (?, ?, ?, ?)';
+    console.log("Request Body:", req.body);  // Log the request body
+
+    const q = 'INSERT INTO todos (task, description, createdAt, status) VALUES (?, ?, ?, ?)';
     db.query(q, [req.body.task, req.body.description, new Date(), 'active'], (err, result) => {
         if (err) {
-            console.log("Failed to store task", err);
-        } else {
-            console.log("todo saved");
-            const updatedTasks = 'select * from todos';
-            db.query(updatedTasks, (error, newList) => {
-                res.send(newList);
-            })
+            console.error("Failed to store task", err); // Log the error
+            return res.status(500).json({ error: "Failed to store task" }); // Respond with an error
         }
-    })
-})
+
+        console.log("Todo saved successfully");
+        const updatedTasks = 'SELECT * FROM todos';
+        db.query(updatedTasks, (error, newList) => {
+            if (error) {
+                console.error("Failed to fetch updated tasks", error);
+                return res.status(500).json({ error: "Failed to fetch updated tasks" });
+            }
+            res.json(newList);  // Use res.json for proper content-type
+        });
+    });
+});
+
 
 app.get('/read-tasks', (req, res) => {
     const q = 'select * from todos';
