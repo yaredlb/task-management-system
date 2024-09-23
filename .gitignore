@@ -17,8 +17,8 @@ Client/dist-ssr
 *.local
 
 # Vercel directories and files
-Client/vercel.json
-server/vercel.json
+#Client/vercel.json
+#server/vercel.json
 
 # Environment variables
 Client/.env
