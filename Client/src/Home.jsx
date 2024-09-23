@@ -15,9 +15,11 @@ const Home = () => {
         // console.log(tab);
     }
 
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
     const handleAddTask = () => {
               // console.log(task);
-        axios.post(`${import.meta.env.VITE_REACT_APP_SERVER_BASEURL}/new-task`, {task, description})
+        axios.post(`${apiUrl}/new-task`, {task, description})
             .then(res => {
                 // console.log(res.data)
                 setTask('');
@@ -30,7 +32,7 @@ const Home = () => {
     }
 
     useEffect(() => {
-        axios.get(`${import.meta.env.VITE_REACT_APP_SERVER_BASEURL}/read-tasks`)
+        axios.get(`${apiUrl}/read-tasks`)
             .then((res) => {
             // console.log(res.data);
             setTodos(res.data);
@@ -50,7 +52,7 @@ const Home = () => {
     }
 
     const updateTask = () => {
-        axios.post(`${import.meta.env.VITE_REACT_APP_SERVER_BASEURL}/update-task`, {updatedId, task, description})
+        axios.post(`${apiUrl}/update-task`, {updatedId, task, description})
             .then(res => {
                 // console.log(res.data)
                 const updatedTask = res.data[0]; // Assuming only one row is returned
@@ -72,7 +74,7 @@ const Home = () => {
     }
 
     const handleDelete = (id) => {
-        axios.post(`${import.meta.env.VITE_REACT_APP_SERVER_BASEURL}/delete-task`, {id})
+        axios.post(`${apiUrl}/delete-task`, {id})
             .then(res => {
                 // console.log(res.data)
                 setTodos(res.data)
@@ -83,7 +85,7 @@ const Home = () => {
     }
 
     const handleComplete = (id) => {
-        axios.post(`${import.meta.env.VITE_REACT_APP_SERVER_BASEURL}/complete-task`, {id})
+        axios.post(`${apiUrl}/complete-task`, {id})
             .then(res => {
                 // console.log(res.data)
                 setTodos(res.data)
